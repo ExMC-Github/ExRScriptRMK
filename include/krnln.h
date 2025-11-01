@@ -10,13 +10,18 @@
 // -----------------------
 // 系统核心支持库
 // File: krnln.h
-// File Version: 0.1.1
+// File Version: 0.1.2
 // -----------------------
+#ifndef KRNLN_H
+#define KRNLN_H
 #include <windows.h>
 #include <iostream>
 #include <string>
 #include <stdio.h>
-using namespace std;
+using std::string;
+using std::to_string;
+extern string runpath;
+extern string exeName;
 
 void msgbox(string content, string title = "") {
     MessageBox(NULL,content.c_str(),title.c_str(), MB_OK | 0);
@@ -39,6 +44,7 @@ void msgbox_warn(string content, string title = "") {
 };
 
 void print(string content) {
+    using namespace std;
     cout << content << endl;
 };
 
@@ -55,3 +61,10 @@ string getrunpath(int argc, char* argv[]) {
     string a = (pos != std::string::npos) ? path.substr(0, pos+1) : "";
     return a;
 };
+
+void ExRScriptInitialize(int argc, char* argv[]) {
+    runpath = getrunpath(argc, argv);
+    exeName = getexename(argc, argv);
+};
+
+#endif
